@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket         = "threatmodel-terraform"  
+    bucket         = "threatmodel-terraform-2026"  
     key            = "terraform/terraform.tfstate"
     region         = "us-east-1"
   }
