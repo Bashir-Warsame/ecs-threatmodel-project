@@ -21,5 +21,5 @@ alb_name = "bashirwarsame-alb"
 tg_name  = "bashirwarsame-target-group"
 
 # Route 53 / ACM
-dns_name       = "tm.bashirwarsame.com"   # subdomain for your app
-dns_hosted_zone = "bashirwarsame.com"     # hosted zone base domain
+dns_name       = "tm.bashirwarsame.online"   # subdomain for your app
+dns_hosted_zone = "bashirwarsame.online"     # hosted zone base domain
