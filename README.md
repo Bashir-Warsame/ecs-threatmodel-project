@@ -1,46 +1,179 @@
+# Production-Ready AWS Threat Modelling App Deployment to AWS ECS with Terraform & GitHub Actions
 
-# Assignment 1 - Open Source App Hosted on ECS with Terraform 🚀
+This project demonstrates a production-style deployment of a containerized Node.js application on AWS ECS using Infrastructure as Code (Terraform) and CI/CD automation (GitHub Actions). 
+The setup is designed to be simple, repeatable, and scalable, removing the need for manual steps in the AWS Console.
 
-This project is based on Amazon's Threat Composer Tool, an open source tool designed to facilitate threat modeling and improve security assessments. You can explore the tool's dashboard here: [Threat Composer Tool](https://awslabs.github.io/threat-composer/workspaces/default/dashboard)
+It provisions a secure, scalable, HTTPS-enabled architecture using:
 
-## Task/Assignment 📝
+* **Amazon ECS (Fargate)**
+* **Application Load Balancer (ALB)**
+* **Amazon ECR**
+* **AWS ACM**
+* **Route 53**
+* **Terraform**
+* **GitHub Actions**
 
-- Create your own repository and complete the task there. You may create a `app` in your repo and copy all the files in this directory into it. Or alternatively, you can use this directory as is. Your choice.
+---
 
-- Your task will be to create a container image for the app, push it to ECR (recommended) or DockerHub. Ideally, you should use a CI/CD pipeline to build, test, and push the container image.
+# Architecture Overview
+![Architecture Diagram](images/Diagram.png)
 
-- Deploy the app on ECS using Terraform. All the resources should be provisioned using Terraform. Use TF modules.
 
-- Make sure the app is live on `https://tm.<your-domain>` or `https://tm.labs.<your-domain>`
+---
 
-- App must use HTTPS. Hosted on ECS. Figure out the rest. Once app is live, add screenshots to the README.md file.
+# Infrastructure Components
 
-- Add architecture diagram of how the infrastructure is setup. (Use Lucidchart or draw.io or mermaid) You are free to use any diagramming tool.
+## Networking
 
-## Local app setup 💻
+* Custom VPC
+* Public subnets across multiple AZs
+* Security groups for ALB and ECS
+* Internet-facing Application Load Balancer
+
+## ⚖ Load Balancing
+
+* HTTP (80) → Redirect to HTTPS (443)
+* SSL termination via AWS ACM
+* Health checks with configurable thresholds
+
+## Compute
+
+* ECS Cluster (Fargate launch type)
+* Task Definition with CPU & memory configuration
+* ECS Service with desired task count
+* CloudWatch logging enabled
+
+## Container Registry
+
+* Amazon ECR repository
+* Docker image tagged and versioned
+* CI/CD image push automation
+
+## Security
+
+* IAM execution role with least privilege
+* Security group isolation (ALB → ECS only)
+* HTTPS enforced with ACM certificate
+
+---
+
+#  CI/CD Pipeline
+
+Automated via **GitHub Actions**:
+
+### Workflow Steps
+
+1. Build Docker image
+2. Authenticate to Amazon ECR
+3. Push image to ECR
+4. Terraform init
+5. Terraform plan
+6. Terraform apply
+
+Ensures infrastructure and application updates are automated and reproducible.
+
+---
+
+# ⚙️ Key Terraform Modules
+
+* VPC & Networking
+* ALB & Target Group
+* ECS Cluster & Service
+* IAM Roles
+* Route 53 Records
+* ACM Certificate
+
+Modular structure allows separation of concerns and reusable components.
+
+---
+
+# 🚀 Deployment
+
+### Initialize Terraform
 
 ```bash
-yarn install
-yarn build
-yarn global add serve
-serve -s build
-
-#yarn start
-http://localhost:3000/workspaces/default/dashboard
-
-## or
-yarn global add serve
-serve -s build
+terraform init
 ```
 
-## Useful links 🔗
+### Plan Infrastructure
 
-- [Terraform AWS Registry](https://registry.terraform.io/providers/hashicorp/aws/latest/docs)
-- [Terraform AWS ECS](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_cluster)
-- [Terraform Docs](https://www.terraform.io/docs/index.html)
-- [ECS Docs](https://docs.aws.amazon.com/ecs/latest/userguide/what-is-ecs.html)
+```bash
+terraform plan
+```
 
-## Advice & Tips �
+### Apply Infrastructure
 
-- This is just a simple app, you may use another app if you'd like. 
-- Use best practices for your Terraform code. Use best practices for your container image. Use best practices for your CI/CD pipeline.
+```bash
+terraform apply
+```
+
+### Destroy Infrastructure
+
+```bash
+terraform destroy
+```
+
+---
+
+# 🔍 Observability
+
+* ECS logs streamed to CloudWatch
+* ALB health checks configured
+* ECS service maintains desired task count
+* Health-based routing via Target Groups
+
+---
+
+# Engineering Challenges Solved
+
+This project involved debugging and resolving:
+
+* Region mismatch between ECS, ACM, and ECR
+* 403 image pull errors from incorrect ECR URI
+* ALB 503 errors due to unhealthy targets
+* Port mismatches between container and target group
+* IAM execution role misconfiguration
+
+These issues strengthened understanding of:
+
+* AWS regional resource scoping
+* ECS task lifecycle
+* ALB health check behavior
+* ECR authentication
+* Terraform dependency ordering
+
+---
+
+# What This Project Demonstrates
+
+* Infrastructure as Code (IaC) best practices
+* Secure containerized deployments
+* Production-grade HTTPS configuration
+* CI/CD automation
+* Cloud debugging & incident resolution
+* AWS networking fundamentals
+* Service-to-service permission modeling (IAM)
+
+---
+
+# 🧩 Technologies Used
+
+* Terraform
+* Docker
+* Amazon ECS (Fargate)
+* Amazon ECR
+* Application Load Balancer
+* AWS ACM
+* Route 53
+* GitHub Actions
+* CloudWatch
+
+---
+
+# Author
+
+**Bashir Warsame**
+
+Cloud & DevOps Engineer
+
+---
