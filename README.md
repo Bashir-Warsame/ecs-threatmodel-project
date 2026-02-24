@@ -1,7 +1,9 @@
 # Production-Ready AWS Threat Modelling App Deployment to AWS ECS with Terraform & GitHub Actions
 
 This project demonstrates a production-style deployment of a containerized Node.js application on AWS ECS using Infrastructure as Code (Terraform) and CI/CD automation (GitHub Actions). 
-The setup is designed to be simple, repeatable, and scalable, removing the need for manual steps in the AWS Console.
+The setup is designed to be simple, repeatable, and scalable, removing the need for manual steps in the AWS Console. The app is securely hosted on AWS with a custom subdomain (bashirwarsame.online) managed through Amazon Route 53.
+
+![threatmodelling-site](images/Threatmodelling-site.png)
 
 It provisions a secure, scalable, HTTPS-enabled architecture using:
 
@@ -57,9 +59,11 @@ It provisions a secure, scalable, HTTPS-enabled architecture using:
 
 ---
 
-#  CI/CD Pipeline
+# CI/CD Pipeline
 
 Automated via **GitHub Actions**:
+
+![CI/CD Pipeline](images/Github-Actions.png)
 
 ### Workflow Steps
 
@@ -87,7 +91,7 @@ Modular structure allows separation of concerns and reusable components.
 
 ---
 
-# 🚀 Deployment
+# Deployment
 
 ### Initialize Terraform
 
@@ -115,7 +119,7 @@ terraform destroy
 
 ---
 
-# 🔍 Observability
+# Observability
 
 * ECS logs streamed to CloudWatch
 * ALB health checks configured
@@ -156,7 +160,7 @@ These issues strengthened understanding of:
 
 ---
 
-# 🧩 Technologies Used
+# Technologies Used
 
 * Terraform
 * Docker
