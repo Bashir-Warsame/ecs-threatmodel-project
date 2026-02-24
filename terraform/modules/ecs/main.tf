@@ -27,8 +27,8 @@ resource "aws_ecs_task_definition" "ecs-td" {
     cpu   = 0
     portMappings = [
       {
-        containerPort = var.container_port
-        hostPort      = var.host_port
+        containerPort = 3000
+        hostPort      = 3000
       }
     ],
     logConfiguration = {
